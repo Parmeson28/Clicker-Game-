@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -15,10 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 
-    private SpriteBatch batch;
-    private Texture blahajTexture;
-
-    private Object BlahajObj;
+    SpriteBatch batch;
+    Texture blahajTexture;
 
     SpriteBatch spriteBatch;
     FitViewport viewport;
@@ -26,6 +25,8 @@ public class Main extends ApplicationAdapter {
     Sprite blahajSprite;
 
     Vector2 touchPos;
+
+    int blahajCounter = 0;
 
 
     @Override
@@ -63,10 +64,17 @@ public class Main extends ApplicationAdapter {
 
     private void input(){
 
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.justTouched()){
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
-            blahajSprite.setCenter(touchPos.x, touchPos.y);
+
+            Rectangle blahajCollision = new Rectangle(blahajSprite.getX(), blahajSprite.getY(), 510f, 300f);
+            if(blahajCollision.contains(touchPos.x, touchPos.y)){
+
+                blahajCounter += 1;
+                System.out.println(blahajCounter);
+            }
+
         }
         
     }
